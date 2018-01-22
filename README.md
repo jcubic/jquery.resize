@@ -1,2 +1,41 @@
 # jquery.resize
-jQuery event on element resize
+
+[![npm](https://img.shields.io/badge/npm-1.0.0-blue.svg)](https://www.npmjs.com/package/jquery.resize)
+![bower](https://img.shields.io/badge/bower-1.0.0-yellow.svg)
+
+Custom resize jQuery event on element resize. The code  use ResizeObserver if browser
+support itm(rigth now only Chrome/Chromium) or sentinel elements (solution from
+[marcj/css-element-queries](https://github.com/marcj/css-element-querie)).
+
+The plugin was created for [jQuery Terminal](https://github.com/jcubic/jquery.terminal).
+
+
+# Usage
+
+You can use it as jQuery plugin:
+
+```javascript
+$('element').resizer(function() {
+    var $this = $(this);
+    console.log($this.width(), $this.height());
+});
+// if handler is omitted all event handlers are removed
+$('element').resizer('unbind', handler);
+```
+
+or as normal event using on/off:
+
+```javascript
+$('element').on('resize', function() {
+    var $this = $(this);
+    console.log($this.width(), $this.height());
+});
+
+$('element').off('resize', handler);
+```
+
+# License
+
+Licensed under [MIT](http://opensource.org/licenses/MIT) license
+
+Copyright (c) 2018 [Jakub Jankiewicz](http://jcubic.pl/jakub-jankiewicz)
