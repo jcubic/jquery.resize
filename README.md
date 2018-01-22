@@ -1,7 +1,7 @@
 # jquery.resize
 
-[![npm](https://img.shields.io/badge/npm-1.0.0-blue.svg)](https://www.npmjs.com/package/jquery.resize)
-![bower](https://img.shields.io/badge/bower-1.0.0-yellow.svg)
+[![npm](https://img.shields.io/badge/npm-1.0.1-blue.svg)](https://www.npmjs.com/package/jquery.resize)
+![bower](https://img.shields.io/badge/bower-1.0.1-yellow.svg)
 
 Custom resize jQuery event for element. The code  use ResizeObserver if browser
 support itm(rigth now only Chrome/Chromium) or sentinel elements (solution from

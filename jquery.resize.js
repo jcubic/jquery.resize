@@ -1,3 +1,13 @@
+/*
+ * Custom resize jQuery event for element version 1.0.1
+ *
+ * Copyright (c) 2018 Jakub Jankiewicz <http://jcubic.pl/me>
+ * Released under the MIT license
+ *
+ * based on marcj/css-element-queries same license
+ */
+
+/* global jQuery, ResizeObserver */
 (function($) {
     "use strict";
     // ----------------------------------------------------------------------------------
@@ -128,13 +138,37 @@
             }
         });
     };
-    // cutom resize jQuery event
-    jQuery.event.special.resize = {
+    var window_events = $.Callbacks();
+    // custom resize jQuery event with handling of default window resize
+    $.event.special.resize = {
+        setup: function(data, namespaces, eventHandle) {
+            if (this === window) {
+                window.addEventListener('resize', eventHandle);
+            }
+        },
+        teardown: function() {
+            window.removeEventListener('resize');
+        },
         add: function(handleObj) {
-            $(this).resizer(handleObj.handler);
+            if (this === window) {
+                window_events.add(handleObj.handler);
+            } else {
+                $(this).resizer(handleObj.handler);
+            }
         },
         remove: function(handleObj) {
-            $(this).resizer('unbind', handleObj.handler);
+            if (this === window) {
+                if (!handleObj.handler) {
+                    window_events.empty();
+                } else {
+                    window_events.remove(handleObj.handler);
+                }
+            } else {
+                $(this).resizer('unbind', handleObj.handler);
+            }
+        },
+        handle: function(event, data) {
+            window_events.fireWith(window, event, data);
         }
     };
 })(jQuery);
