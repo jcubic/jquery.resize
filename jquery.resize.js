@@ -1,7 +1,7 @@
 /*
  * Custom resize jQuery event for element version 1.0.1
  *
- * Copyright (c) 2018 Jakub Jankiewicz <http://jcubic.pl/me>
+ * Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
  * based on marcj/css-element-queries same license
@@ -12,8 +12,6 @@
     "use strict";
     // ----------------------------------------------------------------------------------
     // :: Cross-browser resize element plugin
-    // :: Taken from ResizeSensor.js file from marcj/css-element-queries (MIT license)
-    // :: updated by jQuery Terminal (same license)
     // :: usage:
     // :: to add callback use:
     // ::     $('node').resize(handler_function);
@@ -21,7 +19,7 @@
     // ::     $('node').resize('unbind', handler_function);
     // :: handler function in unbind is optional if omitted all handlers will be removed
     // ----------------------------------------------------------------------------------
-   $.fn.resizer = function(callback) {
+       $.fn.resizer = function(callback) {
         var unbind = arguments[0] === "unbind";
         if (!unbind && !$.isFunction(callback)) {
             throw new Error(
@@ -33,6 +31,7 @@
         }
         return this.each(function() {
             var $this = $(this);
+            var iframe;
             var callbacks;
             if (unbind) {
                 callbacks = $this.data('callbacks');
@@ -53,11 +52,16 @@
                             $this.removeData('observer');
                         }
                     } else {
-                        $this.find('.resizer').remove();
+                        iframe = $this.find('> iframe');
+                        if (iframe.length) {
+                            // just in case of memory leaks in IE
+                            $(iframe[0].contentWindow).off('resize').remove();
+                            iframe.remove();
+                        }
                     }
                 }
             } else if ($this.data('callbacks')) {
-                $this.data('callbacks').add(callback);
+                $(this).data('callbacks').add(callback);
             } else {
                 callbacks = $.Callbacks();
                 callbacks.add(callback);
@@ -68,73 +72,34 @@
                     resizer = new ResizeObserver(function() {
                         if (!first) {
                             var callbacks = $this.data('callbacks');
-                            callbacks.fireWith($this[0], $.Event('resize'));
+                            callbacks.fire();
                         }
                         first = false;
                     });
                     resizer.observe(this);
                     $this.data('observer', resizer);
-                    return;
+                } else {
+                    this.css('position', 'relative');
+                    var style = {
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        overflow: 'hidden',
+                        'z-index': -1,
+                        visibility: 'hidden',
+                        height: '100%',
+                        border: 'none',
+                        padding: 0,
+                        width: '100%'
+                    };
+                    iframe = $('<iframe/>').css(style).appendTo(this)[0];
+
+                    $(iframe.contentWindow).on('resize', function() {
+                        callbacks.fire();
+                    });
                 }
-                var self = this;
-                resizer = $('<div/>').addClass('resizer').appendTo(this)[0];
-                var style =
-                    'position: absolute; left: 0; top: 0; right: 0; bottom: 0; ' +
-                    'overflow: hidden; z-index: -1; visibility: hidden;';
-                var styleChild = 'position: absolute; left: 0; top: 0; transition: 0s;';
-                resizer.style.cssText = style;
-                resizer.innerHTML =
-                    '<div class="resize-sensor-expand" style="' + style + '">' +
-                    '<div style="' + styleChild + '"></div>' + "</div>" +
-                    '<div class="resize-sensor-shrink" style="' + style + '">' +
-                    '<div style="' + styleChild + ' width: 200%; height: 200%"></div>' +
-                    "</div>";
-
-                var expand = resizer.childNodes[0];
-                var expandChild = expand.childNodes[0];
-                var shrink = resizer.childNodes[1];
-                var dirty, rafId, newWidth, newHeight;
-                var lastWidth = self.offsetWidth;
-                var lastHeight = self.offsetHeight;
-
-                var reset = function() {
-                    expandChild.style.width = '100000px';
-                    expandChild.style.height = '100000px';
-
-                    expand.scrollLeft = 100000;
-                    expand.scrollTop = 100000;
-
-                    shrink.scrollLeft = 100000;
-                    shrink.scrollTop = 100000;
-                };
-
-                reset();
-
-                var onResized = function() {
-                    rafId = 0;
-
-                    if (!dirty) {
-                        return;
-                    }
-
-                    lastWidth = newWidth;
-                    lastHeight = newHeight;
-                    callbacks.fireWith($this[0], $.Event('resize'));
-                };
-
-                var onScroll = function() {
-                    newWidth = self.offsetWidth;
-                    newHeight = self.offsetHeight;
-                    dirty = newWidth !== lastWidth || newHeight !== lastHeight;
-
-                    if (dirty && !rafId) {
-                        rafId = requestAnimationFrame(onResized);
-                    }
-
-                    reset();
-                };
-                $(expand).on("scroll", onScroll);
-                $(shrink).on("scroll", onScroll);
             }
         });
     };

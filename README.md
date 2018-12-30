@@ -4,8 +4,7 @@
 ![bower](https://img.shields.io/badge/bower-1.0.1-yellow.svg)
 
 Custom resize jQuery event for element. The code  use ResizeObserver if browser
-support itm(rigth now only Chrome/Chromium) or sentinel elements (solution from
-[marcj/css-element-queries](https://github.com/marcj/css-element-querie)).
+support itm(rigth now only Chrome/Chromium) or sentinel iframe.
 
 The plugin was created for [jQuery Terminal](https://github.com/jcubic/jquery.terminal).
 
@@ -38,4 +37,4 @@ $('element').off('resize', handler);
 
 Licensed under [MIT](http://opensource.org/licenses/MIT) license
 
-Copyright (c) 2018 [Jakub Jankiewicz](http://jcubic.pl/jakub-jankiewicz)
+Copyright (c) 2018 [Jakub T. Jankiewicz](https://jcubic.pl/jakub-jankiewicz)

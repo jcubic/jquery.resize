@@ -1,0 +1,22 @@
+{
+  "name": "jquery.resize",
+  "version": "1.0.1",
+  "description": "Custom resize jQuery event for element",
+  "main": "jquery.resize.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcubic/jquery.resize.git"
+  },
+  "keywords": [
+    "resize",
+    "observer",
+    "jquery",
+    "event"
+  ],
+  "author": "Jakub T. Jankiewicz <jcubic@onet.pl> (https://jcubic.pl/jakub-jankiewicz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jcubic/jquery.resize/issues"
+  },
+  "homepage": "https://github.com/jcubic/jquery.resize#readme"
+}
