@@ -4,7 +4,6 @@
  * Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
- * based on marcj/css-element-queries same license
  */
 
 /* global jQuery, ResizeObserver */
