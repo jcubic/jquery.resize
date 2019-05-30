@@ -19,7 +19,7 @@
     // ::     $('node').resize('unbind', handler_function);
     // :: handler function in unbind is optional if omitted all handlers will be removed
     // ----------------------------------------------------------------------------------
-       $.fn.resizer = function(callback) {
+    $.fn.resizer = function(callback) {
         var unbind = arguments[0] === "unbind";
         if (!unbind && !$.isFunction(callback)) {
             throw new Error(
@@ -104,7 +104,9 @@
         });
     };
     var window_events = $.Callbacks();
-    // custom resize jQuery event with handling of default window resize
+    // custom resize jQuery event with handling of default window resize and resizer
+    // use $(DOM).on('resize', function() {});
+    // or $(DOM).off('resize', function() {});
     $.event.special.resize = {
         setup: function(data, namespaces, eventHandle) {
             if (this === window) {
