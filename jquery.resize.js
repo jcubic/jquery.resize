@@ -108,10 +108,14 @@
         setup: function(data, namespaces, eventHandle) {
             if (this === window) {
                 window.addEventListener('resize', eventHandle);
+                $(window).data('handler', eventHandle);
             }
         },
         teardown: function() {
-            window.removeEventListener('resize');
+            if (this === window) {
+                var eventHandle = $(window).data('handler');
+                window.removeEventListener('resize', eventHandle);
+            }
         },
         add: function(handleObj) {
             if (this === window) {
