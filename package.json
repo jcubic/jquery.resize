@@ -1,6 +1,6 @@
 {
   "name": "jquery.resize",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Custom resize jQuery event for element",
   "main": "jquery.resize.js",
   "repository": {

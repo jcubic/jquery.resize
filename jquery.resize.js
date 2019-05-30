@@ -1,5 +1,5 @@
 /*
- * Custom resize jQuery event for element version 1.0.1
+ * Custom resize jQuery event for element version 1.0.2
  *
  * Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license

@@ -1,7 +1,7 @@
 # jquery.resize
 
-[![npm](https://img.shields.io/badge/npm-1.0.1-blue.svg)](https://www.npmjs.com/package/jquery.resize)
-![bower](https://img.shields.io/badge/bower-1.0.1-yellow.svg)
+[![npm](https://img.shields.io/badge/npm-1.0.2-blue.svg)](https://www.npmjs.com/package/jquery.resize)
+![bower](https://img.shields.io/badge/bower-1.0.2-yellow.svg)
 
 Custom resize jQuery event for element. The code  use ResizeObserver if browser
 support itm(rigth now only Chrome/Chromium) or sentinel iframe.
@@ -35,6 +35,6 @@ $('element').off('resize', handler);
 
 # License
 
-Licensed under [MIT](http://opensource.org/licenses/MIT) license
+Copyright (c) 2018-2019 [Jakub T. Jankiewicz](https://jcubic.pl/jakub-jankiewicz)
 
-Copyright (c) 2018 [Jakub T. Jankiewicz](https://jcubic.pl/jakub-jankiewicz)
+Released under [MIT](http://opensource.org/licenses/MIT) license
