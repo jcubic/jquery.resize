@@ -1,6 +1,6 @@
 {
   "name": "jquery.resize",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Custom resize jQuery event for element",
   "main": "jquery.resize.js",
   "repository": {
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/jcubic/jquery.resize/issues"
   },
-  "homepage": "https://github.com/jcubic/jquery.resize#readme"
+  "homepage": "https://github.com/jcubic/jquery.resize#readme",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
 }

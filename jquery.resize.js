@@ -1,14 +1,41 @@
 /**@license
  *
- * Custom resize jQuery event for element (version 1.0.2)
+ * Custom resize jQuery event for element (version 1.1.0)
  *
- * Copyright (c) 2018 Jakub T. Jankiewicz <https://jcubic.pl/me>
+ * Copyright (c) 2018-2019 Jakub T. Jankiewicz <https://jcubic.pl/me>
  * Released under the MIT license
  *
  */
-
-/* global jQuery, ResizeObserver */
-(function($) {
+/* global ResizeObserver, module, define, global, require */
+(function(factory, undefined) {
+    var root = typeof window !== 'undefined' ? window : global;
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        // istanbul ignore next
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node/CommonJS
+        module.exports = function(root, jQuery) {
+            if (jQuery === undefined) {
+                // require('jQuery') returns a factory that requires window to
+                // build a jQuery instance, we normalize how we use modules
+                // that require this pattern but the window provided is a noop
+                // if it's defined (how jquery works)
+                if (window !== undefined) {
+                    jQuery = require('jquery');
+                } else {
+                    jQuery = require('jquery')(root);
+                }
+            }
+            factory(jQuery);
+            return jQuery;
+        };
+    } else {
+        // Browser
+        // istanbul ignore next
+        factory(root.jQuery);
+    }
+})(function($, undefined) {
     "use strict";
     // ----------------------------------------------------------------------------------
     // :: Cross-browser resize element plugin
@@ -106,7 +133,7 @@
     var window_events = $.Callbacks();
     // custom resize jQuery event with handling of default window resize and resizer
     // use $(DOM).on('resize', function() {});
-    // or $(DOM).off('resize', function() {});
+    // or  $(DOM).off('resize', function() {});
     $.event.special.resize = {
         setup: function(data, namespaces, eventHandle) {
             if (this === window) {
@@ -142,4 +169,4 @@
             window_events.fireWith(window, event, data);
         }
     };
-})(jQuery);
+});
